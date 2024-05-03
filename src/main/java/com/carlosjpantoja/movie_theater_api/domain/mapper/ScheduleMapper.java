@@ -26,17 +26,24 @@ public interface ScheduleMapper {
 		return BlobMapper.INSTANCE.map(value);
 	}
 
+	default String map(String[][] distribution) {
+		return distribution == null ? null : Arrays.stream(distribution)
+				.map(row -> String.join(",", row))
+				.reduce((row1, row2) -> row1 + ";" + row2)
+				.orElse("");
+	}
+
 	default String[][] map(String distribution) {
 		return Arrays.stream(distribution.split(";"))
 				.map(row -> row.split(","))
 				.toArray(String[][]::new);
 	}
 
-	default Movie createMovie(Long movie){
+	default Movie createMovie(Long movie) {
 		return Movie.builder().id(movie).build();
 	}
 
-	default Room createRoom(Long room){
+	default Room createRoom(Long room) {
 		return Room.builder().number(room).build();
 	}
 

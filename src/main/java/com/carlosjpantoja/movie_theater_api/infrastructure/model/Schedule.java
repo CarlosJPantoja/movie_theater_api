@@ -29,5 +29,7 @@ public class Schedule {
 	@ManyToOne
 	@JoinColumn(name = "ROOM")
 	private Room room;
+	@Column(name = "DISTRIBUTION")
+	private String distribution;
 
 }

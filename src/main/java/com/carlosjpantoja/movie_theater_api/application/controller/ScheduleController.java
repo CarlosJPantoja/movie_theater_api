@@ -7,6 +7,7 @@ import com.carlosjpantoja.movie_theater_api.domain.mapper.ScheduleMapper;
 import com.carlosjpantoja.movie_theater_api.domain.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,10 +27,24 @@ public class ScheduleController implements ScheduleAPI {
 		);
 	}
 
+	public ResponseEntity<List<ScheduleResponse>> active() {
+		return ResponseEntity.ok(
+				scheduleService.active().stream().map(ScheduleMapper.INSTANCE::scheduleToScheduleResponse).collect(toList())
+		);
+	}
+
 	public ResponseEntity<ScheduleResponse> create(ScheduleRequest scheduleRequest) {
 		return ResponseEntity.ok(
 				ScheduleMapper.INSTANCE.scheduleToScheduleResponse(
 						scheduleService.create(ScheduleMapper.INSTANCE.scheduleRequestToSchedule(scheduleRequest))
+				)
+		);
+	}
+
+	public ResponseEntity<ScheduleResponse> reservate(ScheduleRequest scheduleRequest) {
+		return ResponseEntity.ok(
+				ScheduleMapper.INSTANCE.scheduleToScheduleResponse(
+						scheduleService.reservate(ScheduleMapper.INSTANCE.scheduleRequestToSchedule(scheduleRequest))
 				)
 		);
 	}

@@ -25,8 +25,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
 
-import static com.carlosjpantoja.movie_theater_api.domain.constant.AppEndpoint.AUTH;
-import static com.carlosjpantoja.movie_theater_api.domain.constant.AppEndpoint.AUTHENTICATE;
+import static com.carlosjpantoja.movie_theater_api.domain.constant.AppEndpoint.*;
 import static com.carlosjpantoja.movie_theater_api.domain.constant.AppErrorCode.AUTH_02;
 import static com.carlosjpantoja.movie_theater_api.domain.constant.AppErrorCode.AUTH_03;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -39,7 +38,7 @@ public class JWTAuthorizationRequestFilter extends OncePerRequestFilter {
 
 	public static final String TOKEN_PREFIX = "Bearer ";
 	public static final String USERNAME_CLAIM_KEY = "username";
-	private static final String[] EXCLUDED_PATHS = {"POST " + AUTH + AUTHENTICATE};
+	private static final String[] EXCLUDED_PATHS = {"POST " + AUTH + AUTHENTICATE, "GET " + MOVIE, "GET " + ROOM, "GET " + SCHEDULE, "GET " + SCHEDULE + ACTIVE, "POST " + SCHEDULE + RESERVATE};
 
 	private final UserDetailsService userDetailsService;
 

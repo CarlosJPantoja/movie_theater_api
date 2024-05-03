@@ -9,8 +9,10 @@ import java.time.LocalDateTime;
 @Setter
 public class ScheduleRequest {
 
+	private Long id;
 	private LocalDateTime dateTime;
 	private Long movie;
 	private Long room;
+	private String[][] distribution;
 
 }

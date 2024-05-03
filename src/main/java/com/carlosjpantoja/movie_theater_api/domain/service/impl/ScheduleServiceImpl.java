@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.carlosjpantoja.movie_theater_api.domain.constant.AppErrorCode.SCHEDULE_01;
@@ -28,8 +29,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleRepository.findAll();
 	}
 
-	private void getById(Long id) {
-		scheduleRepository.findById(id).orElseThrow(
+	public List<Schedule> active() {
+		return scheduleRepository.findByDateTimeAfter(LocalDateTime.now());
+	}
+
+	private Schedule getById(Long id) {
+		return scheduleRepository.findById(id).orElseThrow(
 				() -> new AppException(
 						HttpStatus.NOT_FOUND,
 						new AppError(
@@ -44,6 +49,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return save(schedule);
 	}
 
+	public Schedule reservate(Schedule schedule) {
+		Schedule old = getById(schedule.getId());
+		old.setDistribution(schedule.getDistribution().replaceAll("busy", "reserved"));
+		return save(old);
+	}
+
 	public Schedule update(Schedule schedule) {
 		getById(schedule.getId());
 		return save(schedule);
@@ -52,6 +63,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private Schedule save(Schedule schedule) {
 		schedule.setMovie(movieService.getById(schedule.getMovie().getId()));
 		schedule.setRoom(roomService.getById(schedule.getRoom().getNumber()));
+		schedule.setDistribution(schedule.getRoom().getDistribution());
 		if (scheduleRepository.existsByRoomNumberAndDateTimeBetweenAndIdNot(
 				schedule.getRoom().getNumber(),
 				schedule.getDateTime().minusMinutes(schedule.getMovie().getDuration()),

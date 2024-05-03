@@ -8,7 +8,11 @@ public interface ScheduleService {
 
 	List<Schedule> get();
 
+	List<Schedule> active();
+
 	Schedule create(Schedule schedule);
+
+	Schedule reservate(Schedule schedule);
 
 	Schedule update(Schedule schedule);
 

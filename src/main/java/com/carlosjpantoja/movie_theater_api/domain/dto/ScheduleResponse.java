@@ -13,5 +13,6 @@ public class ScheduleResponse {
 	private LocalDateTime dateTime;
 	private MovieResponse movie;
 	private RoomResponse room;
+	private String[][] distribution;
 
 }

@@ -46,7 +46,14 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http, JWTAuthorizationRequestFilter filter) throws Exception {
 		http.csrf().disable();
-		http.authorizeRequests().antMatchers("/auth/authenticate").permitAll().anyRequest().authenticated();
+		http.authorizeRequests()
+				.antMatchers("/auth/authenticate").permitAll()
+				.antMatchers("/movie").permitAll()
+				.antMatchers("/room").permitAll()
+				.antMatchers("/schedule").permitAll()
+				.antMatchers("/schedule/active").permitAll()
+				.antMatchers("/schedule/reservate").permitAll()
+				.anyRequest().authenticated();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 		http.cors();
