@@ -9,4 +9,6 @@ public final class AppEndpoint {
 
 	public static final String ROOM = "/room";
 
+	public static final String SCHEDULE = "/schedule";
+
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.carlosjpantoja.movie_theater_api.domain.constant.AppErrorCode.ROOM_01;
+import static com.carlosjpantoja.movie_theater_api.domain.constant.AppErrorCode.ROOM_02;
 
 @Service
 @RequiredArgsConstructor
@@ -23,13 +24,25 @@ public class RoomServiceImpl implements RoomService {
 		return roomRepository.findAll();
 	}
 
+	public Room getById(Long number) {
+		return roomRepository.findById(number).orElseThrow(
+				() -> new AppException(
+						HttpStatus.NOT_FOUND,
+						new AppError(
+								ROOM_01.name(),
+								ROOM_01.getMessage()
+						)
+				)
+		);
+	}
+
 	public Room create(Room room) {
 		if (roomRepository.existsById(room.getNumber()))
 			throw new AppException(
 					HttpStatus.FORBIDDEN,
 					new AppError(
-							ROOM_01.name(),
-							ROOM_01.getMessage()
+							ROOM_02.name(),
+							ROOM_02.getMessage()
 					)
 			);
 		return roomRepository.save(room);

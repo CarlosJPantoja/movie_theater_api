@@ -8,6 +8,8 @@ public interface MovieService {
 
 	List<Movie> get();
 
+	Movie getById(Long id);
+
 	Movie create(Movie movie);
 
 	Movie update(Movie movie);

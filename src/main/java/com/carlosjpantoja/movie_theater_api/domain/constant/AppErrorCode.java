@@ -15,7 +15,13 @@ public enum AppErrorCode {
 	AUTH_02("Se requiere un token de autenticación"),
 	AUTH_03("Error al verificar el token de autenticación"),
 
-	ROOM_01("El número de sala ya está en uso");
+	MOVIE_01("La película no existe"),
+
+	ROOM_01("La sala no existe"),
+	ROOM_02("El número de sala ya está en uso"),
+
+	SCHEDULE_01("El horario de proyección no existe"),
+	SCHEDULE_02("La sala se encuentra ocupada en el horario seleccionado");
 
 	private final String message;
 

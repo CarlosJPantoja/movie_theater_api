@@ -8,6 +8,8 @@ public interface RoomService {
 
 	List<Room> get();
 
+	Room getById(Long number);
+
 	Room create(Room room);
 
 	Room update(Room room);
