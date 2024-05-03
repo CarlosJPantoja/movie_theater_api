@@ -5,4 +5,6 @@ public final class AppEndpoint {
 	public static final String AUTH = "/auth";
 	public static final String AUTHENTICATE = "/authenticate";
 
+	public static final String MOVIE = "/movie";
+
 }
