@@ -24,7 +24,7 @@ public interface ScheduleAPI {
 	ResponseEntity<ScheduleResponse> create(@Valid @RequestBody ScheduleRequest scheduleRequest);
 
 	@PostMapping(RESERVATE)
-	ResponseEntity<ScheduleResponse> reservate(@Valid @RequestBody ScheduleRequest scheduleRequest);
+	ResponseEntity<ScheduleResponse> reservate(@Valid @RequestBody ScheduleRequest scheduleRequest, Authentication authentication);
 
 	@PutMapping("/{id}")
 	ResponseEntity<ScheduleResponse> update(@PathVariable Long id, @Valid @RequestBody ScheduleRequest scheduleRequest);

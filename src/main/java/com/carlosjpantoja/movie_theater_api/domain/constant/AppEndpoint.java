@@ -15,4 +15,6 @@ public final class AppEndpoint {
 	public static final String ACTIVE = "/active";
 	public static final String RESERVATE = "/reservate";
 
+	public static final String RESERVATION = "/reservation";
+
 }

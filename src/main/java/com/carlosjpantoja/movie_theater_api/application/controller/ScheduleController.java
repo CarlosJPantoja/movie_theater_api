@@ -41,10 +41,10 @@ public class ScheduleController implements ScheduleAPI {
 		);
 	}
 
-	public ResponseEntity<ScheduleResponse> reservate(ScheduleRequest scheduleRequest) {
+	public ResponseEntity<ScheduleResponse> reservate(ScheduleRequest scheduleRequest, Authentication authentication) {
 		return ResponseEntity.ok(
 				ScheduleMapper.INSTANCE.scheduleToScheduleResponse(
-						scheduleService.reservate(ScheduleMapper.INSTANCE.scheduleRequestToSchedule(scheduleRequest))
+						scheduleService.reservate(ScheduleMapper.INSTANCE.scheduleRequestToSchedule(scheduleRequest), authentication.getName())
 				)
 		);
 	}

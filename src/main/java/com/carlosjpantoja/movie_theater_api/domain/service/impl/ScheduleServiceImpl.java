@@ -5,7 +5,9 @@ import com.carlosjpantoja.movie_theater_api.domain.exception.AppException;
 import com.carlosjpantoja.movie_theater_api.domain.service.MovieService;
 import com.carlosjpantoja.movie_theater_api.domain.service.RoomService;
 import com.carlosjpantoja.movie_theater_api.domain.service.ScheduleService;
+import com.carlosjpantoja.movie_theater_api.infrastructure.model.Reservation;
 import com.carlosjpantoja.movie_theater_api.infrastructure.model.Schedule;
+import com.carlosjpantoja.movie_theater_api.infrastructure.repository.ReservationRepository;
 import com.carlosjpantoja.movie_theater_api.infrastructure.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 	private final MovieService movieService;
 	private final RoomService roomService;
 	private final ScheduleRepository scheduleRepository;
+	private final ReservationRepository reservationRepository;
 
 	public List<Schedule> get() {
 		return scheduleRepository.findAll();
@@ -33,7 +36,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scheduleRepository.findByDateTimeAfter(LocalDateTime.now());
 	}
 
-	private Schedule getById(Long id) {
+	public Schedule getById(Long id) {
 		return scheduleRepository.findById(id).orElseThrow(
 				() -> new AppException(
 						HttpStatus.NOT_FOUND,
@@ -49,10 +52,17 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return save(schedule);
 	}
 
-	public Schedule reservate(Schedule schedule) {
+	public Schedule reservate(Schedule schedule, String username) {
 		Schedule old = getById(schedule.getId());
-		old.setDistribution(schedule.getDistribution().replaceAll("busy", "reserved"));
-		return save(old);
+		Reservation reservation = reservationRepository.save(
+				Reservation.builder()
+						.username(username)
+						.schedule(old)
+						.quantity(schedule.getDistribution().split("busy").length - 1L)
+						.build()
+		);
+		old.setDistribution(schedule.getDistribution().replaceAll("busy", username + reservation.getId()));
+		return scheduleRepository.save(old);
 	}
 
 	public Schedule update(Schedule schedule) {

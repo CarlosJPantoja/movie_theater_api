@@ -38,7 +38,7 @@ public class JWTAuthorizationRequestFilter extends OncePerRequestFilter {
 
 	public static final String TOKEN_PREFIX = "Bearer ";
 	public static final String USERNAME_CLAIM_KEY = "username";
-	private static final String[] EXCLUDED_PATHS = {"POST " + AUTH + AUTHENTICATE, "GET " + MOVIE, "GET " + ROOM, "GET " + SCHEDULE, "GET " + SCHEDULE + ACTIVE, "POST " + SCHEDULE + RESERVATE};
+	private static final String[] EXCLUDED_PATHS = {"POST " + AUTH + AUTHENTICATE, "GET " + MOVIE, "GET " + ROOM, "GET " + SCHEDULE, "GET " + SCHEDULE + ACTIVE};
 
 	private final UserDetailsService userDetailsService;
 

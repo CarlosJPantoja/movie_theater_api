@@ -21,7 +21,9 @@ public enum AppErrorCode {
 	ROOM_02("El número de sala ya está en uso"),
 
 	SCHEDULE_01("El horario de proyección no existe"),
-	SCHEDULE_02("La sala se encuentra ocupada en el horario seleccionado");
+	SCHEDULE_02("La sala se encuentra ocupada en el horario seleccionado"),
+
+	RESERVATION_01("La reserva no existe");
 
 	private final String message;
 

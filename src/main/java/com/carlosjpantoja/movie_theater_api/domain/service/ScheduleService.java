@@ -8,11 +8,13 @@ public interface ScheduleService {
 
 	List<Schedule> get();
 
+	Schedule getById(Long id);
+
 	List<Schedule> active();
 
 	Schedule create(Schedule schedule);
 
-	Schedule reservate(Schedule schedule);
+	Schedule reservate(Schedule schedule, String username);
 
 	Schedule update(Schedule schedule);
 
